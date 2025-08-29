@@ -9,8 +9,8 @@ private class ClockTest {
 
             // Actual test
             Test.startTest();
-            Datetime mockedNow = Clock.now();
-            Datetime realTimeNow = Clock.now(); // This should return the real current time after the mock is exhausted
+            Datetime mockedNow = Clock.systemNow();
+            Datetime realTimeNow = Clock.systemNow(); // This should return the real current time after the mock is exhausted
             Test.stopTest();
 
             // Asserts
@@ -78,6 +78,33 @@ private class ClockTest {
             Assert.areEqual(
                 realToday,
                 today,
+                'The real time should be the current time.'
+            );
+        }
+    }
+
+    @IsTest
+    static void testDatetimeNow() {
+        System.runAs(new User(Id = UserInfo.getUserId())) {
+            // Test data setup
+            Datetime now = System.now();
+            Clock.setMockTimeCall(now.addDays(-5));
+
+            // Actual test
+            Test.startTest();
+            Datetime mockedNow = Clock.gmtNow();
+            Datetime realTimeNow = Clock.gmtNow(); // This should return the real current time after the mock is exhausted
+            Test.stopTest();
+
+            // Asserts
+            Assert.areEqual(
+                mockedNow,
+                now.addDays(-5),
+                'The mocked time should be 5 days ago.'
+            );
+            Assert.areEqual(
+                realTimeNow,
+                now,
                 'The real time should be the current time.'
             );
         }

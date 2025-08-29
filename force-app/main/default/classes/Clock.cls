@@ -33,7 +33,7 @@ public class Clock {
      * @description Get the current time.
      * @return Datetime The current time.
      */
-    public static Datetime now() {
+    public static Datetime systemNow() {
         return (Datetime) getMockedOrDefault(System.now(), Datetime.class);
     }
 
@@ -54,6 +54,14 @@ public class Clock {
      */
     public static Date today() {
         return (Date) getMockedOrDefault(System.today(), Date.class);
+    }
+
+    /**
+     * @description Returns the current Datetime based on a GMT calendar.
+     * @return Datetime The current Datetime.
+     */
+    public static Datetime gmtNow() {
+        return (Datetime) getMockedOrDefault(Datetime.now(), Datetime.class);
     }
 
     /**
